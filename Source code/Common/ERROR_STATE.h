@@ -1,37 +1,49 @@
  /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
-/**        \IntCtrl_Cfg.h
- *            
+/**        \file    ERROR_STATE.h
+ *         \brief   ERRORES file
  *
- *         \Header file for IntCtrl Configuration file
+ *         \details Return the state of the funtion 
+ *
  *
  ********************************************************************************************************************/
- #ifndef INTCTRL_CFG_H_
- #define INTCTRL_CFG_H_
 /********************************************************************************************************************
- *    INCLUDES
+ *    GLOBAL DATA
  ********************************************************************************************************************/
- 
- #include "Std_types.h"
- 
- 
-/********************************************************************************************************************
- *    GLOBAL CONSTANT MACROS 
- ********************************************************************************************************************/
- //Types of Grouping
- #define GR8_SUB0         		            (0x04)
- #define GR4_SUB2         		            (0x05)
- #define GR2_SUB4         		            (0x06)
- #define GR0_SUB8         		            (0x07)
- //Numbers of Interrupts
- #define INTCTRL_NUM_CONFIGURED              0x03
- //Interrupts Grouping Types
- #define INT1_GROUPING_TYPE					GR8_SUB0
- #define INT2_GROUPING_TYPE 				GR4_SUB2
- #define INT3_GROUPING_TYPE 				GR2_SUB4
+ #ifndef ERROR_STATE_H_
+ #define ERROR_STATE_H_
 
- #endif /* End INTCTRL_CFG_H_ */
+ typedef enum errorstate{
+
+
+
+
+	 ES_OK,
+	 ES_NOK,
+	 ES_OUTRANGE,
+	 ES_NULLPOINTER,
+
+
+
+ }ES_t;
+ 
+ 
+ 
+ 
+ 
  /********************************************************************************************************************
- *    END OF FILE: IntCtrl_Cfg.h
+ *   \Syntax                  :  ERROR enum
+ *   \Description             :  Definition of ERROR States
+ *
+ *   \Sync\Async              :  Synchronous
+ *   \Reentrancy              :  Non Reentrant
+ *   \Parameters (in)         :  None
+ *   \Parameters (out)        :  ERROR_STATE
+ *   \Return value            :  None
+ ********************************************************************************************************************/
+ 
+ #endif /* ERROR_STATE_H_ */
+ /********************************************************************************************************************
+ *    END OF FILE: ERROR_STATE_H_
  ********************************************************************************************************************/

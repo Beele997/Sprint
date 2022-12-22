@@ -1,37 +1,37 @@
  /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
-/**        \IntCtrl_Cfg.h
- *            
+/**        \file   GPIO_Cfg.h
+ *         \brief  
  *
- *         \Header file for IntCtrl Configuration file
+ *         \details the file configure the user info
+ *
  *
  ********************************************************************************************************************/
- #ifndef INTCTRL_CFG_H_
- #define INTCTRL_CFG_H_
 /********************************************************************************************************************
- *    INCLUDES
+ *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- 
- #include "Std_types.h"
- 
- 
-/********************************************************************************************************************
- *    GLOBAL CONSTANT MACROS 
- ********************************************************************************************************************/
- //Types of Grouping
- #define GR8_SUB0         		            (0x04)
- #define GR4_SUB2         		            (0x05)
- #define GR2_SUB4         		            (0x06)
- #define GR0_SUB8         		            (0x07)
- //Numbers of Interrupts
- #define INTCTRL_NUM_CONFIGURED              0x03
- //Interrupts Grouping Types
- #define INT1_GROUPING_TYPE					GR8_SUB0
- #define INT2_GROUPING_TYPE 				GR4_SUB2
- #define INT3_GROUPING_TYPE 				GR2_SUB4
+ #define OPEN              		  1
+ #define CLOSED             	  0
 
- #endif /* End INTCTRL_CFG_H_ */
+ #define CHOSEN_BUS        		  AHB_BUS
+ #define GPIO_PORTA_CL     		  OPEN
+ #define GPIO_PORTB_CL     		  OPEN
+ #define GPIO_PORTC_CL     		  OPEN
+ #define GPIO_PORTD_CL            OPEN
+ #define GPIO_PORTE_CL            OPEN
+ #define GPIO_PORTF_CL            OPEN
+ 
+ #define GPIO_PORT_FUNC_DIO       1
+ #define GPIO_PORT_FUNC_ALTR      2
+ 
+
+/********************************************************************************************************************
+ *    GLOBAL DATA
+ ********************************************************************************************************************/
+ 
+
+
  /********************************************************************************************************************
- *    END OF FILE: IntCtrl_Cfg.h
+ *    END OF FILE: GPIO_Cfg.c
  ********************************************************************************************************************/

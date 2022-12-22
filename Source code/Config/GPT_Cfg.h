@@ -1,11 +1,11 @@
  /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
-/**        \IntCtrl.c   
- *         \Nested Vector Interrupt Controller Driver   
+/**        \file   GPT_Cfg.c
+ *         \brief  Configure File of GPT Driver
  *
- *         \The driver configure all MCU interrupts priority into groups and sub-groups  
- *          Enable NVIC Interrupt Gates for prepherals
+ *         \details 
+ *
  *
  ********************************************************************************************************************/
  
@@ -13,18 +13,22 @@
  *    INCLUDES
  ********************************************************************************************************************/
  
- #include "Std_types.h"
- #include "IntCtrl.h"
- #include "Mcu_HW.h"
  
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- 
+ #define GPT_CH_FREQ_125KHZ    (Gpt_ValueType)(6)
 /********************************************************************************************************************
- *    LOCAL DATA
+ *    STRUCTS AND UNION
  ********************************************************************************************************************/
- 
+ typedef struct 
+ {
+	 Gpt_ChannelType GptChannelId;
+	 Gpt_ModeType ChannelMode;
+	 Gpt_ValueType GptGptChannelTickFrequency;
+	 Gpt_ValueType GptChannelTickValueMax;
+	 Ptr_voidFuncVoid_t GptNotification;
+ }Gpt_ConfigType;
 /********************************************************************************************************************
  *    GLOBAL DATA
  ********************************************************************************************************************/
@@ -47,24 +51,17 @@
  
  
  /********************************************************************************************************************
- *   \Syntax                  :  void IntCtrl_Init(void)
- *   \Description             :  Intialization NVIC/SCB Module by parsing the configuration
- *                               into NVIC/SCB registers
+ *   \Syntax                  :  Std_ReturnType FunctionName(AnyType parameterName)
+ *   \Description             :  Describe this service
  *
  *   \Sync\Async              :  Synchronous
  *   \Reentrancy              :  Non Reentrant
  *   \Parameters (in)         :  Parameter Name  Parameter Description
  *   \Parameters (out)        :  None
  *   \Return value            :  Std_ReturnType  E_OK
- *                                               E_NOT_OK
+ *                                                E_NOT_OK
  ********************************************************************************************************************/
- void IntCtrl_Init(void)
- {
-
-
-
- }
  
  /********************************************************************************************************************
- *    END OF FILE: IntCtrl.c
+ *    END OF FILE: FileName.c
  ********************************************************************************************************************/
