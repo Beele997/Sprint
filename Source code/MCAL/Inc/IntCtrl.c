@@ -187,8 +187,9 @@
  *   \Parameters (out)        :  None
  *   \Return value            :  None
  ********************************************************************************************************************/
- void IntCtrl_Init(void)
+ void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority)
  {
+	 
 	 Priority_Group = &G_PRIORITY_GROUPING;
 	 uint8 index;
 	 for(u8_index=0;u8_index>INTCTRL_NUM_CONFIGURED;u8_index++)

@@ -259,11 +259,89 @@
  #define GPIODEN_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x51C)))
  #endif
  /****************************************** GPT DEFINITIONS ********************************************************/
- #define GPTMTnMR  // SET Timer Mode (one shot/ continuous)
- #define GPTMCFG   // Mandatory Init HW parameters
+  
+ 
+ #define GPTMTAV // Value 
+ #define GPTMTBV 
+ #define GPTMTAPR //Prescaler
+ #define GPTMTBPR 
+ #define GPTMTAPS //Prescaler snapshot
+ #define GPTMTBPS
+ #define GPTMTAPV//Prescaler Value
+ #define GPTMTBPV
  #define GPTMCTL   // How to start/stop counting
  #define GPTMIMR   // How to Enable/Disable interrupt
  #define GPTMTAV   // how to get elapsed/remaining time value (Ticks)
+ #define GPTMPP
+ #define RCGCTIMER						(*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x604)))
+ #define RCGCWTIMER						(*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x65C)))
+ 
+ //Timers with 16-32 bit
+ #define GPT_TIMER0_16_BASE_ADDRESS     0x4003.0000
+ #define GPTMCFG_0_16   		    	(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_0_16   	    		(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x00C)))
+ #define GPTMTAMR_0_16   	    		(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x004)))
+ #define GPTMTBMR_0_16   	    		(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x008)))
+ #define GPTMTAILR_0_16 				(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x028)))
+ #define GPTMTBILR_0_16 				(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x02C)))
+ #define GPTMIMR_0_16 					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x018)))
+ #define GPTMRIS_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x01C)))
+ #define GPTMICR_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x024)))
+ #define GPTMMIS_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x020)))
+ 
+ #define GPT_TIMER1_16_BASE_ADDRESS     0x4003.1000
+ #define GPTMCFG_1_16   				(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_1_16   	    		(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x00C)))
+ #define GPTMTAMR_1_16   	    		(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x004)))
+ #define GPTMTBMR_1_16   	    		(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x008)))
+ #define GPTMTAILR_1_16 				(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x028)))
+ #define GPTMTBILR_1_16 				(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x02C)))
+ #define GPTMIMR_1_16 					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x018)))
+ #define GPTMRIS_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x01C)))
+ #define GPTMICR_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x024)))
+ #define GPTMMIS_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x020)))
+ 
+ #define GPT_TIMER2_16_BASE_ADDRESS     0x4003.2000
+ #define GPTMCFG_2_16   				(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_2_16   	    		(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER3_16_BASE_ADDRESS     0x4003.3000
+ #define GPTMCFG_3_16   		    	(*((volatile uint32*)(GPT_TIMER3_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_3_16   	    		(*((volatile uint32*)(GPT_TIMER3_16_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER4_16_BASE_ADDRESS     0x4003.4000
+ #define GPTMCFG_4_16   				(*((volatile uint32*)(GPT_TIMER4_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_4_16   	    		(*((volatile uint32*)(GPT_TIMER4_16_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER5_16_BASE_ADDRESS     0x4003.5000
+ #define GPTMCFG_5_16   				(*((volatile uint32*)(GPT_TIMER5_16_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_5_16   	    		(*((volatile uint32*)(GPT_TIMER5_16_BASE_ADDRESS+0x00C)))
+ //Timers with 32-64 bit
+ #define GPT_TIMER0_32_BASE_ADDRESS     0x4003.6000
+ #define GPTMCFG_0_32   				(*((volatile uint32*)(GPT_TIMER0_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_0_32   	    		(*((volatile uint32*)(GPT_TIMER0_32_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER1_32_BASE_ADDRESS     0x4003.7000
+ #define GPTMCFG_1_32   				(*((volatile uint32*)(GPT_TIMER1_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_1_32   	    		(*((volatile uint32*)(GPT_TIMER1_32_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER2_32_BASE_ADDRESS     0x4004.C000
+ #define GPTMCFG_2_32   				(*((volatile uint32*)(GPT_TIMER2_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_2_32   	    		(*((volatile uint32*)(GPT_TIMER2_32_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER3_32_BASE_ADDRESS     0x4004.D000
+ #define GPTMCFG_3_32   				(*((volatile uint32*)(GPT_TIMER3_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_3_32   	    		(*((volatile uint32*)(GPT_TIMER3_32_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER4_32_BASE_ADDRESS     0x4004.E000
+ #define GPTMCFG_4_32   				(*((volatile uint32*)(GPT_TIMER4_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_4_32   	    		(*((volatile uint32*)(GPT_TIMER4_32_BASE_ADDRESS+0x00C)))
+ 
+ #define GPT_TIMER5_32_BASE_ADDRESS     0x4004.F000 
+ #define GPTMCFG_5_32   				(*((volatile uint32*)(GPT_TIMER5_32_BASE_ADDRESS+0x000)))
+ #define GPTMCTL_5_32   	    		(*((volatile uint32*)(GPT_TIMER5_32_BASE_ADDRESS+0x00C))) 
+ 
+ 
  
  /****************************************** SYSTICK DEFINITIONS ****************************************************/
  #define STCTRL                          (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0x010)))

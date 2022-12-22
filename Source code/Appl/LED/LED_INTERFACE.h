@@ -1,45 +1,37 @@
- /********************************************************************************************************************
+﻿ /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
-/**        \IntCtrl.h
- *         \IntCtrl   
+/**        \LED.h   
+ *         \  
  *
- *         \Header file for IntCtrl Module
+ *         
  *
  ********************************************************************************************************************/
- #ifndef INTCTRL_H_
- #define INTCTRL_H_
+#ifndef LED_INTERFACE_H_
+#define LED_INTERFACE_H_
 /********************************************************************************************************************
- *    INCLUDES
+ *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
+#define LED0                     0
+#define LED1                     1
+#define LED2                     2
  
- #include "Std_types.h"
- #include "IntCtrl_Cfg.h"
  
 /********************************************************************************************************************
- *    GLOBAL MACROS CONTANTS/FUNTIONS
+ *    GLOBAL FUNCTION PROTOTYPES
  ********************************************************************************************************************/
- #define VECTKEY                   0xFA05                 /*Key word Should be Used while Writting on APINT Register*/
-//#define VECTKEY        		   0x05FA                 /*To Change The written on the Regiter bits               */
+ void LED_INIT(u8 LED_Num);
+ void LED_ON(u8 LED_Num);
+ void LED_OFF(u8 LED_Num);
+ void LED_Toggle(u8 LED_Num);
  
  
- #define PRI(i)         		   (0x04+i)
- #if Priority_Group_Checked         0
- #define PRIO_POSITION             (0x04)
- #elif Priority_Group_Checked       1
- #define PRIO_POSITION             (0x05)
- #elif Priority_Group_Checked       2
- #define PRIO_POSITION             (0x06)
- #elif Priority_Group_Checked       3
- #define PRIO_POSITION             (0x07)
- #endif
  
- #define SELECT_PRIGROUP         PRIO_POSITION<<8
-
+ 
+ 
  /********************************************************************************************************************
- *   \Syntax                  :  void IntCtrl_Init(void)
- *   \Description             :  Intialization NVIC/SCB Module by parsing the configuration
- *                               into NVIC/SCB registers
+ *   \Syntax                  :  void LED_Init(void)
+ *   \Description             :  
  *
  *   \Sync\Async              :  Synchronous
  *   \Reentrancy              :  Non Reentrant
@@ -48,9 +40,8 @@
  *   \Return value            :  Std_ReturnType  E_OK
  *                                               E_NOT_OK
  ********************************************************************************************************************/
- void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority);
  
- #endif       /*IntCtrl.h*/
+ #endif
  /********************************************************************************************************************
- *    END OF FILE: IntCtrl.h	
+ *    END OF FILE: LED_INTERFACE.h
  ********************************************************************************************************************/

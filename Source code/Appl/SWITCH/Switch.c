@@ -1,45 +1,46 @@
  /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
-/**        \IntCtrl.h
- *         \IntCtrl   
- *
- *         \Header file for IntCtrl Module
+/**        \Switch.c   
+ *         
  *
  ********************************************************************************************************************/
- #ifndef INTCTRL_H_
- #define INTCTRL_H_
+ 
 /********************************************************************************************************************
  *    INCLUDES
  ********************************************************************************************************************/
  
- #include "Std_types.h"
- #include "IntCtrl_Cfg.h"
- 
+#include "Mcu_Hw.h"
+#include "BIT_MATH.h"
+#include "Std_types.h"
+#include "GPIO.h"
+#include "GPIO_Cfg.h"
+#include "SWITCH.h"
 /********************************************************************************************************************
- *    GLOBAL MACROS CONTANTS/FUNTIONS
+ *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- #define VECTKEY                   0xFA05                 /*Key word Should be Used while Writting on APINT Register*/
-//#define VECTKEY        		   0x05FA                 /*To Change The written on the Regiter bits               */
+void GET_SWITCH(u8 PULL_TYPE,u8 PortId,u8 PinId,u8* SwitchValue)
+{
+	u8 SwitchState;
+	switch(PULL_TYPE)
+	{
+		case PULL_DOWN:
+		DIO_setPinDirection(PortId,PinId,GPIO_PIN_INPUT);
+		DIO_getPinValue(PortId,PinId,&SwitchState);
+		break;
+		
+		case PULL_UP:
+		DIO_setPinDirection(PortId,PinId,GPIO_PIN_INPUT);
+		DIO_setInputPinResistance(PortId,PinId);
+		DIO_getPinValue(PortId,PinId,&SwitchState);
+		break;
+	}
+	*SwitchValue = SwitchState;
+}
  
- 
- #define PRI(i)         		   (0x04+i)
- #if Priority_Group_Checked         0
- #define PRIO_POSITION             (0x04)
- #elif Priority_Group_Checked       1
- #define PRIO_POSITION             (0x05)
- #elif Priority_Group_Checked       2
- #define PRIO_POSITION             (0x06)
- #elif Priority_Group_Checked       3
- #define PRIO_POSITION             (0x07)
- #endif
- 
- #define SELECT_PRIGROUP         PRIO_POSITION<<8
-
  /********************************************************************************************************************
- *   \Syntax                  :  void IntCtrl_Init(void)
- *   \Description             :  Intialization NVIC/SCB Module by parsing the configuration
- *                               into NVIC/SCB registers
+ *   \Syntax                  :  void S_Init(void)
+ *   \Description             : 
  *
  *   \Sync\Async              :  Synchronous
  *   \Reentrancy              :  Non Reentrant
@@ -48,9 +49,12 @@
  *   \Return value            :  Std_ReturnType  E_OK
  *                                               E_NOT_OK
  ********************************************************************************************************************/
- void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority);
  
- #endif       /*IntCtrl.h*/
  /********************************************************************************************************************
- *    END OF FILE: IntCtrl.h	
+ *    END OF FILE: LSwitch.c
  ********************************************************************************************************************/
+
+
+
+
+
