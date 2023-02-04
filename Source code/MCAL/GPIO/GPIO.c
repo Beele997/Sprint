@@ -14,13 +14,16 @@
  ********************************************************************************************************************/
  
  #include "Std_types.h"
+ #include "BIT_MATH.h"
  #include "GPIO.h"
+ #include "GPIO_Cfg.h"
+ #include "GPIO_Types"
  #include "Mcu_HW.h"
  
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- 
+  void(*GPIO_POINTER_CALLBACK_PORTF)(void)=NULL;
 /********************************************************************************************************************
  *    LOCAL DATA
  ********************************************************************************************************************/
@@ -32,12 +35,64 @@
 /********************************************************************************************************************
  *    LOCAL FUNCTION
  ********************************************************************************************************************/
- static void GPIO_Set_Bus_Type(void)
+ static void GPIO_Set_Bus_Type(uint8 GPIO_PortType)
  {
- #if   CHOSEN_BUS==AHB_BUS
- GPIOHBCTL = 0b000000;
+ #ifdef GPIO_AHB
+ switch(PortType)
+ {
+	 case GPIO_PORTA:
+	 SET_BIT(GPIOHBCTL,0);
+	 break;
+	 
+	 case GPIO_PORTB:
+	 SET_BIT(GPIOHBCTL,1);
+	 break;
+	 
+	 case GPIO_PORTC:
+	 SET_BIT(GPIOHBCTL,2);
+	 break;
+	 
+	 case GPIO_PORTD:
+	 SET_BIT(GPIOHBCTL,3);
+	 break;
+	 
+	 case GPIO_PORTE:
+	 SET_BIT(GPIOHBCTL,4);
+	 break;
+	 
+	 case GPIO_PORTF:
+	 SET_BIT(GPIOHBCTL,5);
+	 break;
+ }
+ 
  #elif CHOSEN_BUS==APB_BUS
- GPIOHBCTL = 0b111111;
+ switch(PortType)
+ {
+	 case GPIO_PORTA:
+	 RESET_BIT(GPIOHBCTL,0);
+	 break;
+	 
+	 case GPIO_PORTB:
+	 RESET_BIT(GPIOHBCTL,1);
+	 break;
+	 
+	 case GPIO_PORTC:
+	 RESET_BIT(GPIOHBCTL,2);
+	 break;
+	 
+	 case GPIO_PORTD:
+	 RESET_BIT(GPIOHBCTL,3);
+	 break;
+	 
+	 case GPIO_PORTE:
+	 RESET_BIT(GPIOHBCTL,4);
+	 break;
+	 
+	 case GPIO_PORTF:
+	 RESET_BIT(GPIOHBCTL,5);
+	 break;
+ }
+ #endif
  }
  
  static void GPIO_Enable_Clock(uint8 GPIO_PortType)
@@ -122,11 +177,13 @@
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
  
-  void GPIO_Set_PortDirection(uint8 GPIO_PortType,uint8 GPIO_portDir)
+  void GPIO_Set_PortDirection(uint8 GPIO_PortType,uint8 GPIO_PortDir)
  {
 	 switch(GPIO_PortType)
 		 {
 			 case GPIO_PORTA :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_A = 0x255;
@@ -138,6 +195,8 @@
 			 break;
 			 
 			 case GPIO_PORTB :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_B = 0x255;
@@ -149,6 +208,8 @@
 			 break;
 			 
 			 case GPIO_PORTC :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_C = 0x255;
@@ -160,6 +221,8 @@
 			 break;
 			 
 			 case GPIO_PORTD :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_D = 0x255;
@@ -171,6 +234,8 @@
 			 break;
 			 
 			 case GPIO_PORTE :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_E = 0x255;
@@ -182,6 +247,8 @@
 			 break;
 			 
 			 case GPIO_PORTF :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PortDir==GPIO_PORT_OUTPUT)
 			 {
 				GPIODIR_F = 0x255;
@@ -285,66 +352,66 @@
 			 case GPIO_PORTA :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				GPIODEN_A = 0b111111;
+				GPIODEN_A = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				 GPIODEN_A = 0b000000;
+				 GPIODEN_A = 0x0;
 			 }
 			 break;
 			 
 			 case GPIO_PORTB :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				GPIODEN_B = 0b111111;
+				GPIODEN_B = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				 GPIODEN_B = 0b000000;
+				 GPIODEN_B = 0x0;
 			 }
 			 break;
 			 
 			 case GPIO_PORTC :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				 GPIODEN_C = 0b111111;
+				 GPIODEN_C = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				 GPIODEN_C = 0b000000;
+				 GPIODEN_C = 0x0;
 			 }
 			 break;
 			 
 			 case GPIO_PORTD :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				GPIODEN_D = 0b111111;
+				GPIODEN_D = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				 GPIODEN_D = 0b000000;
+				 GPIODEN_D = 0x0;
 			 }
 			 break;
 			 
 			 case GPIO_PORTE :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				GPIODEN_E = 0b111111;
+				GPIODEN_E = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				 GPIODEN_E = 0b000000;
+				 GPIODEN_E = 0x0;
 			 }
 			 break;
 			 
 			 case GPIO_PORTF :
 			 if(GPIO_DIO==GPIO_DIO_ENABLE)
 			 {
-				GPIODEN_F = 0b111111;
+				GPIODEN_F = 0x3F;
 			 }
 			 else if(GPIO_DIO==GPIO_DIO_DISABLE)
 			 {
-				GPIODEN_F = 0b000000;
+				GPIODEN_F = 0x0;
 			 }
 			 break;
 			 
@@ -368,6 +435,8 @@
 	 switch(GPIO_PortType)
 		 {
 			 case GPIO_PORTA :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_A,GPIO_PinNum);
@@ -379,6 +448,8 @@
 			 break;
 			 
 			 case GPIO_PORTB :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_B,GPIO_PinNum);
@@ -390,6 +461,8 @@
 			 break;
 			 
 			 case GPIO_PORTC :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_C,GPIO_PinNum);
@@ -401,6 +474,8 @@
 			 break;
 			 
 			 case GPIO_PORTD :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_D,GPIO_PinNum);
@@ -412,6 +487,8 @@
 			 break;
 			 
 			 case GPIO_PORTE :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_E,GPIO_PinNum);
@@ -423,6 +500,8 @@
 			 break;
 			 
 			 case GPIO_PORTF :
+			 GPIO_Set_Bus_Type(GPIO_PortType);
+			 GPIO_Enable_Clock(GPIO_PortType);
 			 if(GPIO_PinDir==GPIO_PIN_OUTPUT)
 			 {
 				SET_BIT(GPIODIR_F,GPIO_PinNum);
@@ -518,6 +597,56 @@
 		 }
  }
  
+ void GPIO_GetPinValue(uint8 PortId,uint8 PinId,uint8* PinValue)
+{
+	switch(PortId)
+	{
+		case GPIO_PORTA:
+		if( 1 ==GET_BIT(GPIO_PORTA,PinId))
+		{
+			*PinValue = GPIO_PIN_HIGH;
+		}
+		else
+		{
+			*PinValue = GPIO_PIN_LOW;
+		}
+		break;
+		
+		case GPIO_PORTB:
+		if( 1 ==GET_BIT(GPIO_PORTB,PinId))
+		{
+			*PinValue = GPIO_PIN_HIGH;
+		}
+		else
+		{
+			*PinValue = GPIO_PIN_LOW;
+		}
+		break;
+		
+		case GPIO_PORTC:
+		if( 1 ==GET_BIT(GPIO_PORTC,PinId))
+		{
+			*PinValue = GPIO_PIN_HIGH;
+		}
+		else
+		{
+			*PinValue = GPIO_PIN_LOW;
+		}
+		break;
+		
+		case GPIO_PORTD:
+		if( 1 ==GET_BIT(GPIO_PORTD,PinId))
+		{
+			*PinValue = GPIO_PIN_HIGH;
+		}
+		else
+		{
+			*PinValue = GPIO_PIN_LOW;
+		}
+		break;
+	}
+}
+
  void GPIO_SetPinResistance(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_RESIS)
  {
 	 switch(GPIO_PortType)
@@ -776,7 +905,15 @@
 		 }
  }
  
+ void GPIO_PORTF_SetCallBack(void(*POINTER_FUNC)(void))
+{
+	GPIO_POINTER_CALLBACK_PORTF = POINTER_FUNC;
+}
  
+ void GPIOF_Handler()
+ {
+	 GPIO_PORTF_SetCallBack();
+ } 
  /********************************************************************************************************************
  *   \Syntax                  :  void GPIO_Init(void)
  *   \Description             :  Intialization GPIO Module by parsing the configuration

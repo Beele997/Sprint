@@ -9,13 +9,7 @@
  ********************************************************************************************************************/
  #ifndef INTCTRL_H_
  #define INTCTRL_H_
-/********************************************************************************************************************
- *    INCLUDES
- ********************************************************************************************************************/
- 
- #include "Std_types.h"
- #include "IntCtrl_Cfg.h"
- 
+
 /********************************************************************************************************************
  *    GLOBAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
@@ -23,18 +17,18 @@
 //#define VECTKEY        		   0x05FA                 /*To Change The written on the Regiter bits               */
  
  
- #define PRI(i)         		   (0x04+i)
- #if Priority_Group_Checked         0
- #define PRIO_POSITION             (0x04)
- #elif Priority_Group_Checked       1
- #define PRIO_POSITION             (0x05)
- #elif Priority_Group_Checked       2
- #define PRIO_POSITION             (0x06)
- #elif Priority_Group_Checked       3
- #define PRIO_POSITION             (0x07)
+ #define PRI(i)         		   (0x4+i)
+ #if CHOSEN_PRI_GROUP              GR8_SUB0
+ #define PRIO_POSITION             (0x4<<8)
+ #elif CHOSEN_PRI_GROUP            GR4_SUB2
+ #define PRIO_POSITION             (0x5<<8)
+ #elif CHOSEN_PRI_GROUP            GR2_SUB4
+ #define PRIO_POSITION             (0x6<<8)
+ #elif CHOSEN_PRI_GROUP            GR0_SUB8
+ #define PRIO_POSITION             (0x7<<8)
  #endif
  
- #define SELECT_PRIGROUP         PRIO_POSITION<<8
+ 
 
  /********************************************************************************************************************
  *   \Syntax                  :  void IntCtrl_Init(void)
@@ -48,7 +42,7 @@
  *   \Return value            :  Std_ReturnType  E_OK
  *                                               E_NOT_OK
  ********************************************************************************************************************/
- void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority);
+ void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority,uint8 Priority_Group);
  
  #endif       /*IntCtrl.h*/
  /********************************************************************************************************************

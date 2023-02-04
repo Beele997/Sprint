@@ -22,7 +22,7 @@
 	 Non_Maskable_Interrupt,
 	 Hard_Fault,
 	 Memory_Management,
-	 Bus Fault,
+	 Bus_Fault,
 	 Usage_Fault, 
 	 SVCall=11,
 	 Debug_Monitor,
@@ -76,11 +76,11 @@
 	USB,
 	PWM_Generator3,
 	μDMA Software,
-	μDMA Error
-	ADC1_Sequence0
-	ADC1_Sequence1
-	ADC1_Sequence2
-	ADC1_Sequence3
+	μDMA Error,
+	ADC1_Sequence0,
+	ADC1_Sequence1,
+	ADC1_Sequence2,
+	ADC1_Sequence3,
 	SSI2=73,
 	SSI3,
 	UART3,
@@ -112,7 +112,6 @@
 	PWM1_Generator2,
 	PWM1_Generator3,
 	PWM1_Fault
-	 
  }IntCtrl_InterruptType;
  
  /*typedef struct 

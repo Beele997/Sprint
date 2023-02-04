@@ -20,10 +20,10 @@
 /********************************************************************************************************************
  *    GLOBAL FUNCTION PROTOTYPES
  ********************************************************************************************************************/
- void LED_INIT(u8 LED_Num);
- void LED_ON(u8 LED_Num);
- void LED_OFF(u8 LED_Num);
- void LED_Toggle(u8 LED_Num);
+ void LED_INIT(uint8 LED_Num);
+ void LED_ON(uint8 LED_Num);
+ void LED_OFF(uint8 LED_Num);
+ void LED_Toggle(uint8 LED_Num);
  
  
  

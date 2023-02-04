@@ -18,8 +18,8 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
-#define GPT_COUNTING_TIME0    u32_Counting_OPEN
-#define GPT_COUNTING_TIME1    u32_Counting_CLOSED
+#define GPT_COUNTING_TIME0(i)      i
+#define GPT_COUNTING_TIME1(i)      i
 
 
 

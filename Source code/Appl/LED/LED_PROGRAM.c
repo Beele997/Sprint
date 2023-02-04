@@ -1,4 +1,4 @@
-﻿ /********************************************************************************************************************
+ /********************************************************************************************************************
  * FILE DESCRIPTION 
  * -----------------------------------------------------------------------------------------------------------------*/
 /**        \LED.c   
@@ -11,7 +11,7 @@
  *    INCLUDES
  ********************************************************************************************************************/
  
-#include "STD_TYPES.h"
+#include "Std_types.h"
 #include "Mcu_Hw.h"
 #include "BIT_MATH.h"
 #include "GPIO.h"
@@ -21,95 +21,108 @@
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
-void LED_INIT(u8 LED_Num)
+void LED_INIT(uint8 LED_Num)
 {
 	    switch(LED_Num)
 		{
 		case LED0:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN1,GPIO_PIN_OUTPUT);
+		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN1);
 		break;
 		
 		case LED1:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN2,GPIO_PIN_OUTPUT);
+		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN2);
 		break;
 		
 		case LED2:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN3,GPIO_PIN_OUTPUT);
+		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN3);
 		break;
 		
 		default:
-		break
+		break;
 		}
 }
 
-void LED_ON(u8 LED_Num)
+void LED_ON(uint8 LED_Num)
 {
 	switch(LED_Num)
 		{
 		case LED0:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_HIGH);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN1);
 		break;
 		
 		case LED1:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_HIGH);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN2);
 		break;
 		
 		case LED2:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_HIGH);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3);
 		break;
 		
 		default:
-		break
+		break;
 		}
 }
 
-void LED_OFF(u8 LED_Num)
+void LED_OFF(uint8 LED_Num)
 {
 	switch(LED_Num)
 		{
 		case LED0:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_LOW);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3);
 		break;
 		
 		case LED1:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_LOW);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3);
 		break;
 		
 		case LED2:
-		LED_INIT(u8 LED_Num);
-		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3,GPIO_PORT_LOW);
+		LED_INIT(LED_Num);
+		GPIO_SetPortValue(GPIO_PORTF,GPIO_PIN3);
 		break;
 		
 		default:
-		break
+		break;
 		}
 }
 
-/*void LED_Toggle(u8 LED_Num)
+  void LED_Toggle(uint8 LED_Num)
 {
+  uint32 count;
 	switch(LED_Num)
 		{
 		case LED0:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN1,GPIO_PIN_OUTPUT);
+		LED_ON(GPIO_PORTF);
+    for(count=0;count<65000;count++)
+    {
+    }
+    LED_OFF(GPIO_PORTF);
 		break;
 		
 		case LED1:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN2,GPIO_PIN_OUTPUT);
+		LED_ON(GPIO_PORTF);
+    for(count=0;count<65000;count++)
+    {
+    }
+    LED_OFF(GPIO_PORTF);
 		break;
 		
 		case LED2:
-		GPIO_Set_PortDirection(GPIO_PORTF,GPIO_PIN3,GPIO_PIN_OUTPUT);
+		LED_ON(GPIO_PORTF);
+    for(count=0;count<65000;count++)
+    {
+    }
+    LED_OFF(GPIO_PORTF);
 		break;
 		
 		default:
-		break
+		break;
 		}
-}*/
+}
  
  /********************************************************************************************************************
  *   \Syntax                  :  void LED_Init(void)

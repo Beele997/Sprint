@@ -15,24 +15,26 @@
 #include "Std_types.h"
 #include "GPIO.h"
 #include "GPIO_Cfg.h"
-#include "SWITCH.h"
+#include "Switch.h"
+
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
-void GET_SWITCH(u8 PULL_TYPE,u8 PortId,u8 PinId,u8* SwitchValue)
+void GET_SWITCH(uint8 GPIO_RESIS,uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8* SwitchValue)
 {
-	u8 SwitchState;
-	switch(PULL_TYPE)
+	uint8 SwitchState;
+	switch(GPIO_RESIS)
 	{
-		case PULL_DOWN:
-		DIO_setPinDirection(PortId,PinId,GPIO_PIN_INPUT);
-		DIO_getPinValue(PortId,PinId,&SwitchState);
+		case GPIO_PULLDOWN:
+		GPIO_SetPinDirection(GPIO_PortType,GPIO_PinNum,GPIO_PIN_INPUT);
+		GPIO_SetPinResistance(GPIO_PortType,GPIO_PinNum,GPIO_RESIS);
+		GPIO_GetPinValue(GPIO_PortType,GPIO_PinNum,&SwitchState);
 		break;
 		
-		case PULL_UP:
-		DIO_setPinDirection(PortId,PinId,GPIO_PIN_INPUT);
-		DIO_setInputPinResistance(PortId,PinId);
-		DIO_getPinValue(PortId,PinId,&SwitchState);
+		case GPIO_PULLUP:
+		GPIO_SetPinDirection(GPIO_PortType, GPIO_PinNum,GPIO_PIN_INPUT);
+		GPIO_SetPinResistance( GPIO_PortType,GPIO_PinNum,GPIO_RESIS);
+		GPIO_GetPinValue(GPIO_PortType,GPIO_PinNum,&SwitchState);
 		break;
 	}
 	*SwitchValue = SwitchState;

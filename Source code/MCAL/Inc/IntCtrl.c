@@ -14,10 +14,12 @@
  ********************************************************************************************************************/
  
  #include "Std_types.h"
+ #include "BIT_MATH.h"
+ #include "Mcu_Hw.h"
  #include "IntCtrl.h"
  #include "IntCtrl_Cfg.h"
  #include "IntCtrl_Types.h"
- #include "Mcu_HW.h"
+ 
  
 /********************************************************************************************************************
  *    GLOBAL DATA
@@ -28,20 +30,19 @@
  ********************************************************************************************************************/
 
  static void SetPriorityGroup        (uint8 Priority_Group);
- static void IntCtrl_SetPriority     (IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8_t u8_IntPriority);
+ static void IntCtrl_SetPriority     (IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 u8_IntPriority);
  static void IntCtrl_EnableInterrupt (IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum);
  static void IntCtrl_DisableInterrupt(IntCtrl_InterruptType IntNum);
  
 /********************************************************************************************************************
  *    LOCAL FUNCTION
  ********************************************************************************************************************/
- static void SetPriorityGroupType(uint8* Priority_Group)
+ static void SetPriorityGroupType(uint8 Priority_Group)
  {
 	 uint32 APINT_OldValue         = APINT;                                //save the value was written on APINT
-	 uint8 Priority_Group_Checked = Priority_Group[index] & 0x07           //make sure to get only the needed value
 
-	 APINT = (VECTKEY | (SELECT_PRIGROUP) | APINT_OldValue);
- };
+	 APINT = (VECTKEY | (Priority_Group) | APINT_OldValue);
+ }
  
  static void IntCtrl_SetPriority(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority)
  {
@@ -54,7 +55,7 @@
 		SYSPRI1 = ((ExepNum&0x07)>>5);
 		break;
 		
-		case Bus Fault:
+		case Bus_Fault:
 		SYSPRI1 = ((ExepNum&0x07)>>13);
 		break;
 		
@@ -81,9 +82,9 @@
 		default:
 		//warning Invalid_Value
 		break;
-	};
+	}
 	
- };
+ }
  
  static void IntCtrl_EnableInterrupt (IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum)
  {
@@ -110,7 +111,7 @@
 	 }
 	 else if(IntNum<176 && IntNum>=144)
 	 {
-		IntNUM_Correct = ((IntNum-144)&0xF));
+		IntNUM_Correct = ((IntNum-144)&0xF);
 	    SET_BIT(EN4,IntNUM_Correct);
 	 }
 	 else
@@ -125,7 +126,7 @@
 		SET_BIT(SYSHNDCTRL,16);
 		break;
 		
-		case Bus Fault:
+		case Bus_Fault:
 		SET_BIT(SYSHNDCTRL,17);
 		break;
 		
@@ -136,7 +137,7 @@
 		default:
 		//warning Invalid_Value
 		break;
- };
+ }
  
  static void IntCtrl_DisableInterrupt(IntCtrl_InterruptType IntNum)
  {
@@ -168,10 +169,9 @@
 	 }
 	 else
 	 {
-		 #warning INVALID_ENTRY
+		 //warning INVALID_ENTRY
 	 }
- };
- 
+ }
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
@@ -187,24 +187,16 @@
  *   \Parameters (out)        :  None
  *   \Return value            :  None
  ********************************************************************************************************************/
- void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority)
+ void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority,uint8 Priority_Group)
  {
-	 
-	 Priority_Group = &G_PRIORITY_GROUPING;
-	 uint8 index;
-	 for(u8_index=0;u8_index>INTCTRL_NUM_CONFIGURED;u8_index++)
-	 {
-	 SetPriorityGroup(Priority_Group[u8_index]);
+	 //Set the priority group
+	 SetPriorityGroupType(Priority_Group);
 		 
 	 //Set the priority for each interrupt
-	 IntCtrl_SetPriority(IntNum,ExepNum,InterruptPriority)
+	 IntCtrl_SetPriority(IntNum,ExepNum,InterruptPriority);
 	
 	 //Enable The wanted interrupts
 	 IntCtrl_EnableInterrupt (IntNum,ExepNum);
-	 };
-	
-	
-	
  }
  
  /********************************************************************************************************************

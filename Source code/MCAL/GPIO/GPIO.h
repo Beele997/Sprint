@@ -76,8 +76,9 @@
 /********************************************************************************************************************
  *    LOCAL FUNCTION PROTOTYPES
  ********************************************************************************************************************/
- static void GPIO_Set_Bus_Type(void);
- static void GPIO_Enable_Clock(uint8 Port_Type);
+ static void GPIO_Set_Bus_Type(uint8 GPIO_PortType);
+ static void GPIO_Enable_Clock(uint8 GPIO_PortType);
+
 
  
 /********************************************************************************************************************
@@ -92,6 +93,10 @@
  void GPIO_SetPinResistance(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_RESIS);
  void GPIO_SetPinCurrent(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_Current);
  void GPIO_EnDioPin(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_DIO);
+ void GPIO_GetPinValue(GPIO_PortType,GPIO_PinNum,uint8* PinValue);
+ //Interrupt Handler
+ void GPIO_PORTF_SetCallBack(void(*POINTER_FUNC)(void));
+ void GPIOF_Handler();
  
  #endif       /*GPIO.h*/
  /********************************************************************************************************************

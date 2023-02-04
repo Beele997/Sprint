@@ -20,16 +20,16 @@
  *    GLOBAL CONSTANT MACROS 
  ********************************************************************************************************************/
  //Types of Grouping
- #define GR8_SUB0         		            (0x04)
- #define GR4_SUB2         		            (0x05)
- #define GR2_SUB4         		            (0x06)
- #define GR0_SUB8         		            (0x07)
+ #define GR8_SUB0         		            0x04
+ #define GR4_SUB2         		            0x05
+ #define GR2_SUB4         		            0x06
+ #define GR0_SUB8         		            0x07
  //Numbers of Interrupts
- #define INTCTRL_NUM_CONFIGURED              0x03
+ //#define INTCTRL_NUM_CONFIGURED              0x03
  //Interrupts Grouping Types
- #define INT1_GROUPING_TYPE					GR8_SUB0
- #define INT2_GROUPING_TYPE 				GR4_SUB2
- #define INT3_GROUPING_TYPE 				GR2_SUB4
+ //#define INT1_GROUPING_TYPE			    GR8_SUB0
+ //#define INT2_GROUPING_TYPE 				GR4_SUB2
+ //#define INT3_GROUPING_TYPE 				GR2_SUB4
 
  #endif /* End INTCTRL_CFG_H_ */
  /********************************************************************************************************************
