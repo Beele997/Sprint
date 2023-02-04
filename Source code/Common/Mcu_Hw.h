@@ -24,8 +24,7 @@
 	uint32 VECACT    : 8;
 	uint32           : 3;
 	uint32 RETBASE   : 1;
-	uint32 VECACT    : 4;
-	uint32 VECPEND   : 4;
+	uint32 VECPEND   : 8;
 	uint32           : 2;
 	uint32 ISRPEND   : 1;
 	uint32 ISRPRE    : 1;
@@ -57,7 +56,7 @@
  #define APINT                           (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0xD0C)))
  #define INTCTRL                         (*((volatile INTCTRL_Tag*)(CRTEXM4_PERI_BASE_ADDRESS+0xD04)))
  #define CFGCTRL                         (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0xD14)))
- #define PRIx(Priority_Num)              (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+((0x400+((Priority_Num/4)*4))))))
+ #define PRIx(i)             			 (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+((0x400+((i/4)*4))))))
  #define SWTRIG 						 (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0xF00)))
  #define VTABLE    						 (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0xD08)))
  #define FAULTSTAT                       (*((volatile uint32*)(CRTEXM4_PERI_BASE_ADDRESS+0xD28)))
@@ -104,32 +103,23 @@
  /****************************************** GPIO DEFINITIONS *******************************************************/
  #define RCGCGPIO                        (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x608)))
  #define GPIOHBCTL                       (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x06C)))
- #define GPIOAFSEL					     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x420)))
- #define GPIOPCR  					     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+)))
- #define GPIOIS   					     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x404)))
- #define GPIOIBE   					     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x408)))
- #define GPIOIEV   					     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x40C)))
- #define GPIOIM     				     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x410))) //En-Dis Interrupts
- #define GPIORIS     				     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x414)))//View the state of the interrupt
- #define GPIOMIS						 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x418)))
- #define GPIOADCCTL						 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x530)))
- #define GPIODMACTL						 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x534)))
- #define GPIOLOCK                        (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x520))) //Lock register commit
- #define GPIOCR                          (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x524))) //commit register 
+ #define GPIOPCR  					  			     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+)))
+ #define GPIORIS     								     (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x414)))//View the state of the interrupt
+ 
+ #define GPIOADCCTL											 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x530)))
+ #define GPIODMACTL											 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x534)))
  
  // registers to control strength , pull up, pull down
- #define GPIOSLR  						 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x518)))
- #define GPIOODR  						 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x50C)))
- 
-    //Chose The bus type
- //#define GPIO_APB   0
- #define GPIO_AHB   1
-
+ #define GPIOSLR  											 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x518)))
+ #define GPIOODR  											 (*((volatile uint32*)(GPIO_CLOCK_BASE_ADDRESS+0x50C)))
+  
+ #define GPIO_AHB                        1      						      //Chosen bus
+ /*define GPIO_APB and comment AHB if needed*/
  #ifdef  GPIO_AHB
  //GPIO AHB Definiations
  #define GPIO_PortA_AHB                  0x40058000
  #define GPIODIR_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x400)))
- #define GPIODATA_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x000)))
+ #define GPIODATA_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x3FC)))
  #define GPIOPCTL_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x52C)))
  #define GPIODR2R_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x500)))
  #define GPIODR4R_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x504)))
@@ -137,10 +127,19 @@
  #define GPIOPUR_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x510)))
  #define GPIOPDR_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x514)))
  #define GPIODEN_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x51C)))
+ #define GPIOAFSEL_A                     (*((volatile uint32*)(GPIO_PortA_AHB+0x420)))
+ #define GPIOIS_A                        (*((volatile uint32*)(GPIO_PortA_AHB+0x404)))
+ #define GPIOIBE_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x408)))
+ #define GPIOIEV_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x40C)))
+ #define GPIOIM_A                        (*((volatile uint32*)(GPIO_PortA_AHB+0x410)))
+ #define GPIOLOCK_A                      (*((volatile uint32*)(GPIO_PortA_AHB+0x520)))
+ #define GPIOCR_A                        (*((volatile uint32*)(GPIO_PortA_AHB+0x524)))
+ #define GPIOICR_A                       (*((volatile uint32*)(GPIO_PortA_AHB+0x41C))) 
+ #define GPIOMIS_A											 (*((volatile uint32*)(GPIO_PortA_AHB+0x418)))
  
  #define GPIO_PortB_AHB                  0x40059000
  #define GPIODIR_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x400)))
- #define GPIODATA_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x000)))
+ #define GPIODATA_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x3FC)))
  #define GPIOPCTL_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x52C)))
  #define GPIODR2R_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x500)))
  #define GPIODR4R_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x504)))
@@ -148,10 +147,19 @@
  #define GPIOPUR_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x510)))
  #define GPIOPDR_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x514)))
  #define GPIODEN_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x51C)))
+ #define GPIOAFSEL_B                     (*((volatile uint32*)(GPIO_PortB_AHB+0x420)))
+ #define GPIOIS_B                        (*((volatile uint32*)(GPIO_PortB_AHB+0x404)))
+ #define GPIOIBE_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x408)))
+ #define GPIOIEV_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x40C)))
+ #define GPIOIM_B                        (*((volatile uint32*)(GPIO_PortB_AHB+0x410)))
+ #define GPIOLOCK_B                      (*((volatile uint32*)(GPIO_PortB_AHB+0x520)))
+ #define GPIOCR_B                        (*((volatile uint32*)(GPIO_PortB_AHB+0x524)))
+ #define GPIOICR_B                       (*((volatile uint32*)(GPIO_PortB_AHB+0x41C)))
+ #define GPIOMIS_B											 (*((volatile uint32*)(GPIO_PortB_AHB+0x418)))
  
  #define GPIO_PortC_AHB                  0x4005A000
  #define GPIODIR_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x400)))
- #define GPIODATA_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x000)))
+ #define GPIODATA_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x3FC)))
  #define GPIOPCTL_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x52C)))
  #define GPIODR2R_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x500)))
  #define GPIODR4R_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x504)))
@@ -159,10 +167,19 @@
  #define GPIOPUR_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x510)))
  #define GPIOPDR_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x514)))
  #define GPIODEN_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x51C)))
+ #define GPIOAFSEL_C                     (*((volatile uint32*)(GPIO_PortC_AHB+0x420)))
+ #define GPIOIS_C                        (*((volatile uint32*)(GPIO_PortC_AHB+0x404)))
+ #define GPIOIBE_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x408)))
+ #define GPIOIEV_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x40C)))
+ #define GPIOIM_C                        (*((volatile uint32*)(GPIO_PortC_AHB+0x410)))
+ #define GPIOLOCK_C                      (*((volatile uint32*)(GPIO_PortC_AHB+0x520)))
+ #define GPIOCR_C                        (*((volatile uint32*)(GPIO_PortC_AHB+0x524)))
+ #define GPIOICR_C                       (*((volatile uint32*)(GPIO_PortC_AHB+0x41C)))
+ #define GPIOMIS_C											 (*((volatile uint32*)(GPIO_PortC_AHB+0x418)))
  
  #define GPIO_PortD_AHB                  0x4005B000
  #define GPIODIR_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x400)))
- #define GPIODATA_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x000)))
+ #define GPIODATA_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x3FC)))
  #define GPIOPCTL_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x52C)))
  #define GPIODR2R_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x500)))
  #define GPIODR4R_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x504)))
@@ -170,10 +187,19 @@
  #define GPIOPUR_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x510)))
  #define GPIOPDR_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x514)))
  #define GPIODEN_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x51C)))
+ #define GPIOAFSEL_D                     (*((volatile uint32*)(GPIO_PortD_AHB+0x420)))
+ #define GPIOIS_D                        (*((volatile uint32*)(GPIO_PortD_AHB+0x404)))
+ #define GPIOIBE_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x408)))
+ #define GPIOIEV_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x40C)))
+ #define GPIOIM_D                        (*((volatile uint32*)(GPIO_PortD_AHB+0x410)))
+ #define GPIOLOCK_D                      (*((volatile uint32*)(GPIO_PortD_AHB+0x520)))
+ #define GPIOCR_D                        (*((volatile uint32*)(GPIO_PortD_AHB+0x524)))
+ #define GPIOICR_D                       (*((volatile uint32*)(GPIO_PortD_AHB+0x41C)))
+ #define GPIOMIS_D											 (*((volatile uint32*)(GPIO_PortD_AHB+0x418)))
  
  #define GPIO_PortE_AHB                  0x4005C000
  #define GPIODIR_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x400)))
- #define GPIODATA_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x000)))
+ #define GPIODATA_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x3FC)))
  #define GPIOPCTL_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x52C)))
  #define GPIODR2R_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x500)))
  #define GPIODR4R_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x504)))
@@ -181,10 +207,19 @@
  #define GPIOPUR_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x510)))
  #define GPIOPDR_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x514)))
  #define GPIODEN_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x51C)))
+ #define GPIOAFSEL_E                     (*((volatile uint32*)(GPIO_PortE_AHB+0x420)))
+ #define GPIOIS_E                        (*((volatile uint32*)(GPIO_PortE_AHB+0x404)))
+ #define GPIOIBE_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x408)))
+ #define GPIOIEV_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x40C)))
+ #define GPIOIM_E                        (*((volatile uint32*)(GPIO_PortE_AHB+0x410)))
+ #define GPIOLOCK_E                      (*((volatile uint32*)(GPIO_PortE_AHB+0x520)))
+ #define GPIOCR_E                        (*((volatile uint32*)(GPIO_PortE_AHB+0x524)))
+ #define GPIOICR_E                       (*((volatile uint32*)(GPIO_PortE_AHB+0x41C)))
+ #define GPIOMIS_E											 (*((volatile uint32*)(GPIO_PortE_AHB+0x418)))
  
  #define GPIO_PortF_AHB                  0x4005D000
  #define GPIODIR_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x400)))
- #define GPIODATA_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x000)))
+ #define GPIODATA_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x3FC)))
  #define GPIOPCTL_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x52C)))
  #define GPIODR2R_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x500)))
  #define GPIODR4R_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x504)))
@@ -192,12 +227,22 @@
  #define GPIOPUR_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x510)))
  #define GPIOPDR_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x514)))
  #define GPIODEN_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x51C)))
- 
- #elif GPIO_APB
+ #define GPIOAFSEL_F                     (*((volatile uint32*)(GPIO_PortF_AHB+0x420)))
+ #define GPIOIS_F                        (*((volatile uint32*)(GPIO_PortF_AHB+0x404)))
+ #define GPIOIBE_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x408)))
+ #define GPIOIEV_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x40C)))
+ #define GPIOIM_F                        (*((volatile uint32*)(GPIO_PortF_AHB+0x410)))
+ #define GPIOLOCK_F                      (*((volatile uint32*)(GPIO_PortF_AHB+0x520)))
+ #define GPIOCR_F                        (*((volatile uint32*)(GPIO_PortF_AHB+0x524)))
+ #define GPIOICR_F                       (*((volatile uint32*)(GPIO_PortF_AHB+0x41C)))
+ #define GPIOMIS_F											 (*((volatile uint32*)(GPIO_PortF_AHB+0x418)))
+	 
+ #endif
+ #ifdef GPIO_APB
  //GPIO APB Definiations
  #define GPIO_PortA_APB                  0x40004000
  #define GPIODIR_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x400)))
- #define GPIODATA_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x000)))
+ #define GPIODATA_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x3FC)))
  #define GPIOPCTL_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x52C)))
  #define GPIODR2R_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x500)))
  #define GPIODR4R_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x504)))
@@ -205,10 +250,19 @@
  #define GPIOPUR_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x510)))
  #define GPIOPDR_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x514)))
  #define GPIODEN_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x51C)))
+ #define GPIOAFSEL_A                     (*((volatile uint32*)(GPIO_PortA_APB+0x420)))
+ #define GPIOIS_A                        (*((volatile uint32*)(GPIO_PortA_APB+0x404)))
+ #define GPIOIBE_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x408)))
+ #define GPIOIEV_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x40C)))
+ #define GPIOIM_A                        (*((volatile uint32*)(GPIO_PortA_APB+0x410)))
+ #define GPIOLOCK_A                      (*((volatile uint32*)(GPIO_PortA_APB+0x520)))
+ #define GPIOCR_A                        (*((volatile uint32*)(GPIO_PortA_APB+0x524)))
+ #define GPIOICR_A                       (*((volatile uint32*)(GPIO_PortA_APB+0x41C)))
+ #define GPIOMIS_A											 (*((volatile uint32*)(GPIO_PortA_APB+0x418)))
 
  #define GPIO_PortB_APB                  0x40005000
  #define GPIODIR_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x400)))
- #define GPIODATA_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x000)))
+ #define GPIODATA_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x3FC)))
  #define GPIOPCTL_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x52C)))
  #define GPIODR2R_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x500)))
  #define GPIODR4R_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x504)))
@@ -216,10 +270,20 @@
  #define GPIOPUR_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x510)))
  #define GPIOPDR_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x514)))
  #define GPIODEN_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x51C)))
+ #define GPIOAFSEL_B                     (*((volatile uint32*)(GPIO_PortB_APB+0x420)))
+ #define GPIOIS_B                        (*((volatile uint32*)(GPIO_PortB_APB+0x404)))
+ #define GPIOIBE_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x408)))
+ #define GPIOIEV_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x40C)))
+ #define GPIOIM_B                        (*((volatile uint32*)(GPIO_PortB_APB+0x410)))
+ #define GPIOLOCK_B                      (*((volatile uint32*)(GPIO_PortB_APB+0x520)))
+ #define GPIOCR_B                        (*((volatile uint32*)(GPIO_PortB_APB+0x524)))
+ #define GPIOICR_B                       (*((volatile uint32*)(GPIO_PortB_APB+0x41C)))
+ #define GPIOMIS_B											 (*((volatile uint32*)(GPIO_PortB_APB+0x418)))
+
  
  #define GPIO_PortC_APB                  0x40006000
  #define GPIODIR_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x400)))
- #define GPIODATA_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x000)))
+ #define GPIODATA_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x3FC)))
  #define GPIOPCTL_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x52C)))
  #define GPIODR2R_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x500)))
  #define GPIODR4R_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x504)))
@@ -227,10 +291,19 @@
  #define GPIOPUR_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x510)))
  #define GPIOPDR_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x514)))
  #define GPIODEN_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x51C)))
+ #define GPIOAFSEL_C                     (*((volatile uint32*)(GPIO_PortC_APB+0x420)))
+ #define GPIOIS_C                        (*((volatile uint32*)(GPIO_PortC_APB+0x404)))
+ #define GPIOIBE_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x408)))
+ #define GPIOIEV_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x40C)))
+ #define GPIOIM_C                        (*((volatile uint32*)(GPIO_PortC_APB+0x410)))
+ #define GPIOLOCK_C                      (*((volatile uint32*)(GPIO_PortC_APB+0x520)))
+ #define GPIOCR_C                        (*((volatile uint32*)(GPIO_PortC_APB+0x524)))
+ #define GPIOICR_C                       (*((volatile uint32*)(GPIO_PortC_APB+0x41C)))
+ #define GPIOMIS_C											 (*((volatile uint32*)(GPIO_PortC_APB+0x418)))
  
  #define GPIO_PortD_APB                  0x40007000
  #define GPIODIR_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x400)))
- #define GPIODATA_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x000)))
+ #define GPIODATA_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x3FC)))
  #define GPIOPCTL_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x52C)))
  #define GPIODR2R_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x500)))
  #define GPIODR4R_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x504)))
@@ -238,10 +311,19 @@
  #define GPIOPUR_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x510)))
  #define GPIOPDR_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x514)))
  #define GPIODEN_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x51C)))
+ #define GPIOAFSEL_D                     (*((volatile uint32*)(GPIO_PortD_APB+0x420)))
+ #define GPIOIS_D                        (*((volatile uint32*)(GPIO_PortD_APB+0x404)))
+ #define GPIOIBE_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x408)))
+ #define GPIOIEV_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x40C)))
+ #define GPIOIM_D                        (*((volatile uint32*)(GPIO_PortD_APB+0x410)))
+ #define GPIOLOCK_D                      (*((volatile uint32*)(GPIO_PortD_APB+0x520)))
+ #define GPIOCR_D                        (*((volatile uint32*)(GPIO_PortD_APB+0x524)))
+ #define GPIOICR_D                       (*((volatile uint32*)(GPIO_PortD_APB+0x41C)))
+ #define GPIOMIS_D											 (*((volatile uint32*)(GPIO_PortD_APB+0x418)))
  
  #define GPIO_PortE_APB                  0x40024000
  #define GPIODIR_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x400)))
- #define GPIODATA_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x000)))
+ #define GPIODATA_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x3FC)))
  #define GPIOPCTL_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x52C)))
  #define GPIODR2R_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x500)))
  #define GPIODR4R_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x504)))
@@ -249,10 +331,19 @@
  #define GPIOPUR_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x510)))
  #define GPIOPDR_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x514)))
  #define GPIODEN_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x51C)))
+ #define GPIOAFSEL_E                     (*((volatile uint32*)(GPIO_PortE_APB+0x420)))
+ #define GPIOIS_E                        (*((volatile uint32*)(GPIO_PortE_APB+0x404)))
+ #define GPIOIBE_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x408)))
+ #define GPIOIEV_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x40C)))
+ #define GPIOIM_E                        (*((volatile uint32*)(GPIO_PortE_APB+0x410)))
+ #define GPIOLOCK_E                      (*((volatile uint32*)(GPIO_PortE_APB+0x520)))
+ #define GPIOCR_E                        (*((volatile uint32*)(GPIO_PortE_APB+0x524)))
+ #define GPIOICR_E                       (*((volatile uint32*)(GPIO_PortE_APB+0x41C)))
+ #define GPIOMIS_E											 (*((volatile uint32*)(GPIO_PortE_APB+0x418)))
  
  #define GPIO_PortF_APB                  0x40025000
  #define GPIODIR_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x400)))
- #define GPIODATA_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x000)))
+ #define GPIODATA_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x3FC)))
  #define GPIOPCTL_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x52C)))
  #define GPIODR2R_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x500)))
  #define GPIODR4R_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x504)))
@@ -260,6 +351,15 @@
  #define GPIOPUR_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x510)))
  #define GPIOPDR_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x514)))
  #define GPIODEN_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x51C)))
+ #define GPIOAFSEL_F                     (*((volatile uint32*)(GPIO_PortF_APB+0x420)))
+ #define GPIOIS_F                        (*((volatile uint32*)(GPIO_PortF_APB+0x404)))
+ #define GPIOIBE_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x408)))
+ #define GPIOIEV_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x40C)))
+ #define GPIOIM_F                        (*((volatile uint32*)(GPIO_PortF_APB+0x410)))
+ #define GPIOLOCK_F                      (*((volatile uint32*)(GPIO_PortF_APB+0x520)))
+ #define GPIOCR_F                        (*((volatile uint32*)(GPIO_PortF_APB+0x524)))
+ #define GPIOICR_F                       (*((volatile uint32*)(GPIO_PortF_APB+0x41C)))
+ #define GPIOMIS_F											 (*((volatile uint32*)(GPIO_PortF_APB+0x418)))
  #endif
  /****************************************** GPT DEFINITIONS ********************************************************/
   
@@ -291,6 +391,9 @@
  #define GPTMRIS_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x01C)))
  #define GPTMICR_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x024)))
  #define GPTMMIS_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x020)))
+ #define GPTMTAPR_0_16					(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x038)))
+ #define GPTMTAMATCHR_0_16				(*((volatile uint32*)(GPT_TIMER0_16_BASE_ADDRESS+0x030)))
+ 
  
  #define GPT_TIMER1_16_BASE_ADDRESS     0x40031000
  #define GPTMCFG_1_16   				(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x000)))
@@ -303,10 +406,24 @@
  #define GPTMRIS_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x01C)))
  #define GPTMICR_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x024)))
  #define GPTMMIS_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x020)))
+ #define GPTMTAPR_1_16					(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x038)))
+ #define GPTMTAMATCHR_1_16				(*((volatile uint32*)(GPT_TIMER1_16_BASE_ADDRESS+0x030)))
+ 
  
  #define GPT_TIMER2_16_BASE_ADDRESS     0x40032000
  #define GPTMCFG_2_16   				(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x000)))
  #define GPTMCTL_2_16   	    		(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x00C)))
+ #define GPTMTAMR_2_16   	    		(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x004)))
+ #define GPTMTBMR_2_16   	    		(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x008)))
+ #define GPTMTAILR_2_16 				(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x028)))
+ #define GPTMTBILR_2_16 				(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x02C)))
+ #define GPTMIMR_2_16 					(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x018)))
+ #define GPTMRIS_2_16					(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x01C)))
+ #define GPTMICR_2_16					(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x024)))
+ #define GPTMMIS_2_16					(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x020)))
+ #define GPTMTAPR_2_16					(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x038)))
+ #define GPTMTAMATCHR_2_16				(*((volatile uint32*)(GPT_TIMER2_16_BASE_ADDRESS+0x030)))
+ 
  
  #define GPT_TIMER3_16_BASE_ADDRESS     0x40033000
  #define GPTMCFG_3_16   		    	(*((volatile uint32*)(GPT_TIMER3_16_BASE_ADDRESS+0x000)))
@@ -362,3 +479,6 @@
  /********************************************************************************************************************
  *    END OF FILE: MCU_HW.h	
  ********************************************************************************************************************/
+ 
+  
+  

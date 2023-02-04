@@ -10,15 +10,11 @@
  #ifndef GPIO_H_
  #define GPIO_H_
 /********************************************************************************************************************
- *    INCLUDES
- ********************************************************************************************************************/
- 
- #include "Std_types.h"
- #include "GPIO_Cfg.h"
- 
-/********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
+ #include "Std_types.h"
+ 
+ 
  #define GPIO_PORTA            0
  #define GPIO_PORTB            1
  #define GPIO_PORTC            2
@@ -60,8 +56,7 @@
  
  #define UART0                 0
  #define SSI0                  1
- #define I21C0                 2
- #define UART0                 3	
+ #define I21C0                 2	
  
  
  
@@ -76,29 +71,38 @@
 /********************************************************************************************************************
  *    LOCAL FUNCTION PROTOTYPES
  ********************************************************************************************************************/
- static void GPIO_Set_Bus_Type(uint8 GPIO_PortType);
- static void GPIO_Enable_Clock(uint8 GPIO_PortType);
 
 
  
 /********************************************************************************************************************
  *    GLOBAL FUNCTION PROTOTYPES
  ********************************************************************************************************************/
- void GPIO_Set_PortDirection(uint8 GPIO_PortType,uint8 GPIO_portDir);
+ void GPIO_Set_PortDirection(uint8 GPIO_PortType,uint8 GPIO_PortDir);
  void GPIO_SetPortValue(uint8 GPIO_PortType,uint8 GPIO_PortValue);
  void GPIO_EnDioPort(uint8 GPIO_PortType,uint8 GPIO_DIO);
- //void GPIO_SetAltrFuncPort(uint8 FuncType);
+ void GPIO_SetPortCurrent(uint8 GPIO_PortType,uint8 GPIO_Current);
+ void GPIO_SetPortResistance(uint8 GPIO_PortType,uint8 GPIO_RESIS);
+ void GPIO_InitPort(uint8 GPIO_PortType,uint8 GPIO_PortDir,uint8 GPIO_DIO,uint8 GPIO_Current,uint8 GPIO_RESIS);
+ 
+ /*void GPIO_SetAltrFuncPort(uint8 FuncType);*/
  void GPIO_SetPinDirection(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_PinDir);
  void GPIO_SetPinValue(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_PinValue);
  void GPIO_SetPinResistance(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_RESIS);
  void GPIO_SetPinCurrent(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_Current);
  void GPIO_EnDioPin(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_DIO);
- void GPIO_GetPinValue(GPIO_PortType,GPIO_PinNum,uint8* PinValue);
- //Interrupt Handler
- void GPIO_PORTF_SetCallBack(void(*POINTER_FUNC)(void));
+ uint8 GPIO_GetPinValue(uint8 GPIO_PortType,uint8 GPIO_PinNum);
+ void GPIO_InitPin(uint8 GPIO_PortType,uint8 GPIO_PinNum,uint8 GPIO_PinDir,uint8 GPIO_DIO,uint8 GPIO_Current,uint8 GPIO_RESIS);
+ /*Interrupt Handler*/
+ void GPIO_PORTF_SetCallBack(void(*POINTER_FUNC)(void)) ;
+ 
+void GPIO_EnablePinInterrupt(uint8 GPIO_PortType,uint8 GPIO_PinNum);
+void GPIO_EnablePortInterrupt(uint8 GPIO_PortType);
  void GPIOF_Handler();
+ 
  
  #endif       /*GPIO.h*/
  /********************************************************************************************************************
  *    END OF FILE: GPIO.h	
  ********************************************************************************************************************/
+ 
+ 

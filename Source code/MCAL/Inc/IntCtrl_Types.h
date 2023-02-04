@@ -12,7 +12,7 @@
 /********************************************************************************************************************
  *    INCLUDES
  ********************************************************************************************************************/
- #include "Std_types.h"
+ 
 /********************************************************************************************************************
  *    GLOBAL DATA TYPES AND STRUCTURES
  ********************************************************************************************************************/
@@ -51,7 +51,7 @@
 	ADC0_Sequence2,
 	ADC0_Sequence3,
 	Watchdog_Timers0,
-	Watchdog Timers1=34,
+	Watchdog_Timers1=34,
 	Timer0A,
 	Timer0B,
 	Timer1A,
@@ -61,7 +61,7 @@
 	Analog_Comparator0,
 	Analog_Comparator1,
 	Reserved,
-	System Control,
+	System_Control,
 	Flash_EEPROM_Control,
 	GPIO_Port_F,
 	UART2=49,
@@ -75,8 +75,8 @@
 	Hibernation_Module=59,
 	USB,
 	PWM_Generator3,
-	μDMA Software,
-	μDMA Error,
+	μDMA_Software,
+	μDMA_Error,
 	ADC1_Sequence0,
 	ADC1_Sequence1,
 	ADC1_Sequence2,

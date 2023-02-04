@@ -10,23 +10,21 @@
  #ifndef INTCTRL_H_
  #define INTCTRL_H_
 
+#include "IntCtrl_Types.h"
 /********************************************************************************************************************
  *    GLOBAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- #define VECTKEY                   0xFA05                 /*Key word Should be Used while Writting on APINT Register*/
-//#define VECTKEY        		   0x05FA                 /*To Change The written on the Regiter bits               */
+ #define VECTKEY_KEY_MSK           0xFA05                 /*To Change The written on the Regiter bits****************/
+ #define VECTKEY        		   0x05FA                 /*Key word Should be Used while Writting on APINT Register*/
+ #define APINT_PRIGROUP_MSK        0x0                    /*Reset PRIGROUP Bits**************************************/
+ #define APINT_PRIGROUP_POS        0x8                    /*PRIGROUP BitsPostions in APINT***************************/
  
- 
- #define PRI(i)         		   (0x4+i)
- #if CHOSEN_PRI_GROUP              GR8_SUB0
- #define PRIO_POSITION             (0x4<<8)
- #elif CHOSEN_PRI_GROUP            GR4_SUB2
- #define PRIO_POSITION             (0x5<<8)
- #elif CHOSEN_PRI_GROUP            GR2_SUB4
- #define PRIO_POSITION             (0x6<<8)
- #elif CHOSEN_PRI_GROUP            GR0_SUB8
- #define PRIO_POSITION             (0x7<<8)
- #endif
+
+
+ #define GR8_SUB0             (0x4)
+ #define GR4_SUB2             (0x5)
+ #define GR2_SUB4             (0x6)
+ #define GR0_SUB8             (0x7)
  
  
 
@@ -42,7 +40,7 @@
  *   \Return value            :  Std_ReturnType  E_OK
  *                                               E_NOT_OK
  ********************************************************************************************************************/
- void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 InterruptPriority,uint8 Priority_Group);
+ void IntCtrl_Init(IntCtrl_InterruptType IntNum,IntCtrl_Exception_Types ExepNum,uint8 IntPriority_G,uint8 IntPriority_s,uint8 Priority_Group_Type);
  
  #endif       /*IntCtrl.h*/
  /********************************************************************************************************************

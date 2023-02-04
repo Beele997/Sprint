@@ -10,6 +10,8 @@
  ********************************************************************************************************************/
 #ifndef GPT_H_
 #define GPT_H_
+
+
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
@@ -35,6 +37,8 @@
  #define NORMAL_TIMER_MODE               0
  #define PWM_MODE                        1
  
+
+ #define SEC          							     64000
 /********************************************************************************************************************
  *    GLOBAL DATA
  ********************************************************************************************************************/
@@ -45,12 +49,13 @@
  ********************************************************************************************************************/
  
  void GPT_SetClcRunMode(uint8 GPT_TimerBit,uint8 GPT_TimerType,uint8 GPT_ClcState);
- void GPT_Init(uint8 TimerMode,uint8 GPT_TimerBit,uint8 GPT_TimerType,uint32 GPT_CTRL);
- void TIMER1A_Handler();
+ void GPT_Init(uint8 GPT_TimerBit,uint8 GPT_TimerType,uint32 GPT_CTRL,uint32* DesiredTime);
+
  void GPT_timer1_SetCallBack(void(*POINTER_FUNC)(void));
  void GPT_timer0_SetCallBack(void(*POINTER_FUNC)(void));
  
- 
+ void TIMER1A_Handler();
+ void TIMER0A_Handler();
  
  /********************************************************************************************************************
  *   \Syntax                  :  void GPT_Init(void)

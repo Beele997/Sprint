@@ -13,14 +13,16 @@
  ********************************************************************************************************************/
  #define OPEN              		  1
  #define CLOSED             	  0
-
- #define CHOSEN_BUS        		  AHB_BUS
+ 
+ /*#define GPIO_APB               2*/
+ #define GPIO_AHB                 1
+ 
  #define GPIO_PORTA_CL     		  OPEN
  #define GPIO_PORTB_CL     		  OPEN
  #define GPIO_PORTC_CL     		  OPEN
- #define GPIO_PORTD_CL            OPEN
- #define GPIO_PORTE_CL            OPEN
- #define GPIO_PORTF_CL            OPEN
+ #define GPIO_PORTD_CL          OPEN
+ #define GPIO_PORTE_CL          OPEN
+ #define GPIO_PORTF_CL          OPEN
  
  #define GPIO_PORT_FUNC_DIO       1
  #define GPIO_PORT_FUNC_ALTR      2
@@ -35,3 +37,5 @@
  /********************************************************************************************************************
  *    END OF FILE: GPIO_Cfg.c
  ********************************************************************************************************************/
+ 
+ 

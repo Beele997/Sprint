@@ -1,0 +1,70 @@
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
+/* Define a queue to hold the tasks */
+QueueHandle_t task_queue;
+
+/* Define a structure to hold task information */
+typedef struct {
+    TaskFunction_t task; /* task function */
+    TickType_t deadline; /* task deadline */
+} TaskInfo_t;
+
+/* Compare function to sort tasks in the queue */
+int task_cmp(void *a, void *b)
+{
+    TaskInfo_t *ta = (TaskInfo_t *)a;
+    TaskInfo_t *tb = (TaskInfo_t *)b;
+
+    /* sort by deadline */
+    if (ta->deadline < tb->deadline) {
+        return -1;
+    } else if (ta->deadline > tb->deadline) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+/* Scheduler task */
+void scheduler_task(void *pvParameters)
+{
+    TaskInfo_t task_info;
+
+    for (;;) {
+        /* Get the next task from the queue */
+        if (xQueueReceive(task_queue, &task_info, portMAX_DELAY)) {
+            /* Execute the task */
+            task_info.task();
+
+            /* Sort the queue */
+            xQueueSort(task_queue, task_cmp);
+        }
+    }
+}
+
+/* Function to add a new task to the scheduler */
+void add_task(TaskFunction_t task, TickType_t deadline)
+{
+    TaskInfo_t task_info = {
+        .task = task,
+        .deadline = xTaskGetTickCount() + deadline
+    };
+
+    /* Add the task to the queue */
+    xQueueSend(task_queue, &task_info, 0);
+
+    /* Sort the queue */
+    xQueueSort(task_queue, task_cmp);
+}
+
+/* Initialize the scheduler */
+void scheduler_init(void)
+{
+    /* Create the task queue */
+    task_queue = xQueueCreate(10, sizeof(TaskInfo_t));
+
+    /* Create the scheduler task */
+    xTaskCreate(scheduler_task, "scheduler", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL);
+}
