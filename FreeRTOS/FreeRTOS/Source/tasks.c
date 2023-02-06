@@ -130,7 +130,6 @@
             uxTopReadyPriority = ( uxPriority );    \
         }                                           \
     } /* taskRECORD_READY_PRIORITY */
-
 /*-----------------------------------------------------------*/
 
     #define taskSELECT_HIGHEST_PRIORITY_TASK()                                \
@@ -337,33 +336,10 @@ typedef struct tskTaskControlBlock       /* The old naming convention is used to
     #if ( configUSE_POSIX_ERRNO == 1 )
         int iTaskErrno;
     #endif
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		/* E.C. : the period of a task */
 #if ( configUSE_EDF_SCHEDULER == 1 )
      TickType_t xTaskPeriod; /*< Stores the period in tick of the task. > */
 #endif
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 } tskTCB;
 
@@ -853,30 +829,6 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
 
         return xReturn;
     }
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		 BaseType_t xTaskPeriodicCreate( TaskFunction_t pxTaskCode,
@@ -966,31 +918,7 @@ static void prvAddNewTaskToReadyList( TCB_t * pxNewTCB ) PRIVILEGED_FUNCTION;
         }
 
         return xReturn;
-    }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+    }	
 #endif /* configSUPPORT_DYNAMIC_ALLOCATION */
 /*-----------------------------------------------------------*/
 
