@@ -1,18 +1,18 @@
-	/***********************************************************************************************************************
- *   \date 	 : 02.02.2023          
- *   \name 	 : Ahmed Elebaby       
+/***********************************************************************************************************************
+ *   \date 	  : 06.02.2023          
+ *   \name 	  : Ahmed Elebaby       
  *	 \version : 1.0              
- *	 \SWC     : Lightswitch          
- *   \brief   : header file for Light Switch driver
+ *	 \SWC     : DIO driver          
+ *   \brief   : Header file of GPIO MCAL module.
 ************************************************************************************************************************/
-#ifndef LIGHT_SWITCH_H_
-#define LIGHT_SWITCH_H_
+#ifndef __MCAL_GPIO_H__
+#define __MCAL_GPIO_H__
 
 
 /********************************************************************************************************************
  *    INCLUDES
  ********************************************************************************************************************/
-#include <stdint.h>
+ #include <stdint.h>
  
 
  
@@ -20,24 +20,44 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- 
+/*Pin Macros*/
+#define GPIO_PIN_0 ((uint16_t)0x0001)
+#define GPIO_PIN_1 ((uint16_t)0x0002)
+#define GPIO_PIN_2 ((uint16_t)0x0004)
+#define GPIO_PIN_3 ((uint16_t)0x0008)
+#define GPIO_PIN_4 ((uint16_t)0x0010)
+#define GPIO_PIN_5 ((uint16_t)0x0020) 
+#define GPIO_PIN_6 ((uint16_t)0x0040)
+#define GPIO_PIN_7 ((uint16_t)0x0080) 
+/*Port Macros*/
+#define GPIO_PORTA ((uint16_t)0x0001)
+#define GPIO_PORTB ((uint16_t)0x0002)
+#define GPIO_PORTC ((uint16_t)0x0004) 
+#define GPIO_PORTD ((uint16_t)0x0008) 
+#define GPIO_PORTE ((uint16_t)0x0010) 
+#define GPIO_PORTF ((uint16_t)0x0020)
+
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
  ********************************************************************************************************************/
- typedef enum
+typedef enum
 {
-
-    SWITCH_STATE_OFF = 1, /* LIGHT SWITCH IS NOT PRESSED     */
-    SWITCH_STATE_ON = 0   /* LIGHT SWITCH IS PRESSED         */
-
-} LightSwitchState;
-
-typedef struct {
 	
-	LightSwitchState switch_state;
-    uint32_t message_id;
-    
-} LightSwitchMessage;
+    PIN_RESET = 0,
+    PIN_SET   = 1
+
+} GPIO_PinState;
+
+typedef struct
+{
+    uint16_t Port; /* Specifies the GPIO Port to be configured.*/
+
+    uint16_t Pin; /* Specifies the GPIO pins to be configured*/
+
+    uint32_t Pull; /*Specifies the Pull-up or Pull-Down activation for the selected pins*/
+
+    uint32_t Alternate; /*Peripheral to be connected to the selected pins*/
+} GPIO_Init_Config;
 
 
 /********************************************************************************************************************
@@ -55,14 +75,14 @@ typedef struct {
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the light switch hardware here*/
-void light_switch_init(void);
+ /*Initialize the can*/
+void GPIO_Init(GPIO_Init_Config *pstr_Init);
 
-/*Read the state of the light switch*/
-LightSwitchState light_switch_read_state(void);
-void light_switch_send_message(void);
+/*Control functions */
+GPIO_PinState GPIO_ReadPin(uint16_t *GPIOx, uint16_t GPIO_Pin);
+void GPIO_WritePin(uint16_t GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
+void GPIO_TogglePin(uint16_t GPIOx, uint16_t GPIO_Pin);
 
 /*Callack functions*/
-void LightSwitch_On_SetCallback(void (*OnState_CallBack)(void));
-void  LightSwitch_Off_SetCallback(void (*OffState_CallBack)(void));
-#endif /*End of file Light Switch*/
+void GPIO_EXTI_CallbackSet(uint16_t GPIOx,uint16_t GPIO_Pin,void (*EXTI_Callback)(void));
+#endif /*End of file GPIO file*/

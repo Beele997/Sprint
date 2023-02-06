@@ -12,9 +12,7 @@
 /********************************************************************************************************************
  *    INCLUDES
  ********************************************************************************************************************/
- /*UTILS*/
- #include "STD_TYPES.h"
- #include "BIT_MATH.h"
+ #include <stdint.h>
  
 
  
@@ -22,18 +20,18 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- 
+ #define SPEED_SENSOR_MESSAGE_ID 0x102
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
  ********************************************************************************************************************/
- typedef enum
-{
-	Moving_State = 0,  /*The Car is moving  */
-    Stopping_State = 1 /*The Car stopped    */
+typedef struct {
+	
+    uint32_t message_id;
+    uint16_t speed;
+	
+} SpeedSensorMessage;
 
-} Moving_State_t;
-
-typedef uint32_t SpeedMeasure;
+typedef uint16_t SpeedMeasure;
 
 /********************************************************************************************************************
  *    GLOBAL DATA
@@ -50,13 +48,15 @@ typedef uint32_t SpeedMeasure;
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialization function*/
-void SpeedSensor_init(void);
+ /*Initialize the speed sensor*/
+void speed_sensor_init(void);
 
-/*Control functions*/
-SpeedMeasure SpeedSensor_getMeasure(void);
-Moving_State_t SpeedSensor_getMovingState(void);
+/*Control functions : Read the speed of the car and return it*/
+SpeedMeasure speed_sensor_read_speed(void);
+void speed_sensor_send_message(void);
+
 
 /*Callack functions*/
+
 
 #endif /*End of file Speed Sensor*/
