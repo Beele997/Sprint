@@ -52,7 +52,7 @@ typedef uint8_t BuzzerConfig_t;
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the can*/
+ /*Initialize the buzzer*/
 void Buzzer_Init(BuzzerConfig_t *config);
 
 /*Control functions */

@@ -39,7 +39,7 @@ typedef struct
   uint8_t  IC_prescaler; 	/*specifies the Input Capture Prescaler*/
   uint32_t IC_channel; 		/* Specifies the channel of the input Capture*/
   uint32_t IC_selection;	/*Specifies the input*/
-  uint32_t IC_polarity;      /*Specifies the active edge of the input signal*/
+  uint32_t IC_polarity;     /*Specifies the active edge of the input signal*/
   uint32_t IC_frequency_hz; /*Specifies the frequency*/
   
 } IC_Config_t;
