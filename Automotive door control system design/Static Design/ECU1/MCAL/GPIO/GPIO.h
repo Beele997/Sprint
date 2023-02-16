@@ -21,21 +21,21 @@
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
 /*Pin Macros*/
-#define GPIO_PIN_0 ((uint16_t)0x0001)
-#define GPIO_PIN_1 ((uint16_t)0x0002)
-#define GPIO_PIN_2 ((uint16_t)0x0004)
-#define GPIO_PIN_3 ((uint16_t)0x0008)
-#define GPIO_PIN_4 ((uint16_t)0x0010)
-#define GPIO_PIN_5 ((uint16_t)0x0020) 
-#define GPIO_PIN_6 ((uint16_t)0x0040)
-#define GPIO_PIN_7 ((uint16_t)0x0080) 
+#define GPIO_PIN_0 ((uint16_t)0x0001) /* Pin 0 selected    */
+#define GPIO_PIN_1 ((uint16_t)0x0002) /* Pin 1 selected    */
+#define GPIO_PIN_2 ((uint16_t)0x0004) /* Pin 2 selected    */
+#define GPIO_PIN_3 ((uint16_t)0x0008) /* Pin 3 selected    */
+#define GPIO_PIN_4 ((uint16_t)0x0010) /* Pin 4 selected    */
+#define GPIO_PIN_5 ((uint16_t)0x0020) /* Pin 5 selected    */
+#define GPIO_PIN_6 ((uint16_t)0x0040) /* Pin 6 selected    */
+#define GPIO_PIN_7 ((uint16_t)0x0080) /* Pin 7 selected    */
 /*Port Macros*/
-#define GPIO_PORTA ((uint16_t)0x0001)
-#define GPIO_PORTB ((uint16_t)0x0002)
-#define GPIO_PORTC ((uint16_t)0x0004) 
-#define GPIO_PORTD ((uint16_t)0x0008) 
-#define GPIO_PORTE ((uint16_t)0x0010) 
-#define GPIO_PORTF ((uint16_t)0x0020)
+#define GPIO_PORTA ((uint16_t)0x0001) /* PORT A selected    */
+#define GPIO_PORTB ((uint16_t)0x0002) /* PORT B selected    */
+#define GPIO_PORTC ((uint16_t)0x0004) /* PORT C selected    */
+#define GPIO_PORTD ((uint16_t)0x0008) /* PORT D selected    */
+#define GPIO_PORTE ((uint16_t)0x0010) /* PORT E selected    */
+#define GPIO_PORTF ((uint16_t)0x0020) /* PORT F selected    */
 
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
@@ -43,8 +43,8 @@
 typedef enum
 {
 	
-    PIN_RESET = 0,
-    PIN_SET   = 1
+    PIN_RESET = 0, /*PIN in low*/
+    PIN_SET   = 1  /*PIN in hogh*/
 
 } GPIO_PinState;
 
@@ -75,10 +75,14 @@ typedef struct
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the can*/
+ /*Initialize the GPIO
+ @ to init the congigured pins
+ */
 void GPIO_Init(GPIO_Init_Config *pstr_Init);
 
-/*Control functions */
+/*Control functions 
+ @APIs to read,write and toggle pins on the ports
+*/
 GPIO_PinState GPIO_ReadPin(uint16_t *GPIOx, uint16_t GPIO_Pin);
 void GPIO_WritePin(uint16_t GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState);
 void GPIO_TogglePin(uint16_t GPIOx, uint16_t GPIO_Pin);

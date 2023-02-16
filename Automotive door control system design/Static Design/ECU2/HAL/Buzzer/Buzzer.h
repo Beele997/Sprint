@@ -25,13 +25,13 @@
 typedef enum 
 {
 	
-    BUZZER_OFF,
-    BUZZER_ON
+    BUZZER_OFF,						/*Buzzer is turned off*/
+    BUZZER_ON  						/*Buzzer is turned on*/
 	
 } BuzzerState_t;
 
 
-typedef uint8_t BuzzerConfig_t;
+typedef uint8_t BuzzerConfig_t;     /*Typedef to configure the sellected buzzer*/
    
 
 

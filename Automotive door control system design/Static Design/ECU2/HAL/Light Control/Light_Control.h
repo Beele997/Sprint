@@ -24,16 +24,16 @@
  ********************************************************************************************************************/
 typedef enum
 {
-    Left_Light_Select ,
-    Right_Light_Select,
-    Both_Light_Select   
+    Left_Light_Select ,    /* Left Light driver is selected to control    */
+    Right_Light_Select ,   /* Right Light driver is selected to control   */
+    Both_Light_Select      /* Both Light driver is selected to control    */  
 
 } LightSelect_t;
 	
 typedef enum
 {
-    STATUS_OK,   
-    STATUS_NOK 
+     STATUS_OK, 		    /* Contol operation has successfully done   */
+    STATUS_NOT_OK 			/* Contol operation  has failed             */
 
 } CTRLStatus_t;
    
@@ -56,7 +56,7 @@ typedef enum
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the can*/
+ /*Initialize the light controller*/
 void LightCtrl_init(void);
 
 /*Control functions */

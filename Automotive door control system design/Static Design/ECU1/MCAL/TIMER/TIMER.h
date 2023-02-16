@@ -17,20 +17,20 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
-#define TIMER_PRESCALER_1    1
-#define TIMER_PRESCALER_8    8
-#define TIMER_PRESCALER_64 	64
-#define TIMER_PRESCALER_256 256
+#define TIMER_PRESCALER_1    1   /*PRESCALER Value 1 selected*/
+#define TIMER_PRESCALER_8    8	 /*PRESCALER Value 8 selected*/
+#define TIMER_PRESCALER_64 	64	 /*PRESCALER Value 64 selected*/
+#define TIMER_PRESCALER_256 256  /*PRESCALER Value 265 selected*/
 
-#define TIMER_CLOCK_INTERNAL 0
-#define TIMER_CLOCK_EXTERNAL 1
+#define TIMER_CLOCK_INTERNAL 		0 /*Internal timer is used*/
+#define TIMER_CLOCK_EXTERNAL 		1 /*External timer is used*/
 
-#define TIM0 ((uint32_t)0X0000001)
-#define TIM1 ((uint32_t)0X0000010)
-#define TIM2 ((uint32_t)0X0000100)
-#define TIM3 ((uint32_t)0X0001000)
-#define TIM4 ((uint32_t)0X0010000)
-#define TIM5 ((uint32_t)0X0100000)
+#define TIM0 ((uint32_t)0X0000001)  /*Timer 0 sellected*/
+#define TIM1 ((uint32_t)0X0000010)	/*Timer 1 sellected*/
+#define TIM2 ((uint32_t)0X0000100)	/*Timer 2 sellected*/
+#define TIM3 ((uint32_t)0X0001000)	/*Timer 3 sellected*/
+#define TIM4 ((uint32_t)0X0010000)	/*Timer 4 sellected*/
+#define TIM5 ((uint32_t)0X0100000)	/*Timer 5 sellected*/
 
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
@@ -38,27 +38,27 @@
 typedef enum 
 {
 	
-  TIMER_OK,
-  TIMER_ERROR
+  TIMER_OK,						/*return state is done*/
+  TIMER_ERROR					/*An error occured 	  */
   
 } Timer_Status_t;
 
 typedef enum
 {
 	
-    GPT_MODE_CONT,
-    GPT_MODE_ONESHOT,
-    GPT_MODE_SPEC
+    GPT_MODE_CONT,   			/*Continues mode sellected*/
+    GPT_MODE_ONESHOT,			/*one shot mode sellected*/
+    GPT_MODE_SPEC				/*Spec mode sellected*/
 
 } GPT_ModeType;
 
 typedef struct 
 {
-	
-  uint8_t prescaler;
-  uint8_t clock_source;
-  uint32_t TickFrequency;
-  void (*PeriodElapsedCallback)(void);
+  GPT_ModeType ChannelMode;					/* configured mode*/
+  uint8_t prescaler;						/* configured prescaler */
+  uint8_t clock_source;						/* configured Timer type */
+  uint32_t TickFrequency;					/* configured frequency */
+  void (*PeriodElapsedCallback)(void);		/*Set call back to Elapsed API */
 } Timer_Config_t;
 
 
@@ -78,7 +78,7 @@ typedef struct
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the can*/
+ /*Initialize the Timer*/
 Timer_Status_t Timer_Init(Timer_Config_t* config, Timer_Callback_t callback);
 
 /*Control functions */

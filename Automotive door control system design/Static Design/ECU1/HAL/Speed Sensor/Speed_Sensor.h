@@ -20,18 +20,32 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
- #define SPEED_SENSOR_MESSAGE_ID 0x102
+ #define SPEED_SENSOR_MESSAGE_ID 0x102 /*Macro to define the ID of the sensor*/
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
  ********************************************************************************************************************/
+  /*
+   @brief Door State structures definition
+ */
+ /*
+ enum speed sensor
+ */
+ 
+  typedef enum
+{
+    CAR_MOVING  = 0, /* car is moving             */
+    CAR_PARK 	= 1	 /* The car is in park mode   */
+
+} SpeedState;
+
 typedef struct {
-	
-    uint32_t message_id;
-    uint16_t speed;
+	SpeedState speed_State;/* /*current speed state*/*/
+    uint32_t message_id; /*variable to carry the configured Id of the sensor*/
+    uint16_t speed;      /*current speed measurment*/
 	
 } SpeedSensorMessage;
 
-typedef uint16_t SpeedMeasure;
+typedef uint16_t SpeedMeasure; /*data type to indentify speed rate */
 
 /********************************************************************************************************************
  *    GLOBAL DATA
@@ -54,9 +68,5 @@ void speed_sensor_init(void);
 /*Control functions : Read the speed of the car and return it*/
 SpeedMeasure speed_sensor_read_speed(void);
 void speed_sensor_send_message(void);
-
-
-/*Callack functions*/
-
 
 #endif /*End of file Speed Sensor*/

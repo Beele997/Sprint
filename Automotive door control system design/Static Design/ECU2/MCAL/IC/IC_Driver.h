@@ -20,7 +20,7 @@
 /********************************************************************************************************************
  *    LOCAL MACROS CONTANTS/FUNTIONS
  ********************************************************************************************************************/
-#define IC_OS_TICK_PERIOD_MS 10
+#define IC_OS_TICK_PERIOD_MS      10 /*Macro to configure the period of message tick*/
 
 /********************************************************************************************************************
  *    LOCAL DATA & DATA STRUCTURE
@@ -28,8 +28,8 @@
 typedef enum 
 {
 	
-  IC_OK,
-  IC_ERROR
+  IC_OK,			/*return state is done*/
+  IC_ERROR			/*An error occured 	  */
   
 } IC_Status_t;
 
@@ -39,7 +39,7 @@ typedef struct
   uint8_t  IC_prescaler; 	/*specifies the Input Capture Prescaler*/
   uint32_t IC_channel; 		/* Specifies the channel of the input Capture*/
   uint32_t IC_selection;	/*Specifies the input*/
-  uint32_t IC_polarity;      /*Specifies the active edge of the input signal*/
+  uint32_t IC_polarity;     /*Specifies the active edge of the input signal*/
   uint32_t IC_frequency_hz; /*Specifies the frequency*/
   
 } IC_Config_t;
@@ -61,7 +61,7 @@ typedef struct
 /********************************************************************************************************************
  *    GLOBAL FUNCTION
  ********************************************************************************************************************/
- /*Initialize the can*/
+ /*Initialize the IC*/
 IC_Status_t ic_init(IC_Config_t *pstinit);
 IC_Status_t ic_deinit(uint32_t IC_channel);
 
